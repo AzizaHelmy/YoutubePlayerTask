@@ -11,12 +11,8 @@ import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 
-class PlayerAdapter(context: Context) : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
+class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
     private var playList: List<VideoPlayer> = ArrayList()
-
-    init {
-
-    }
 
     fun submitLis(newList: List<VideoPlayer>) {
         playList = newList
@@ -43,25 +39,20 @@ class PlayerAdapter(context: Context) : RecyclerView.Adapter<PlayerAdapter.Playe
 
     inner class PlayerViewHolder(val binding: ItemRvPlayerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-     //  private val playbackStateListener: Player.Listener = playbackStateListener()
 
+     //  private val playbackStateListener: Player.Listener = playbackStateListener()
         private var player: ExoPlayer? = null
         private var playWhenReady = true
         private var currentItem = 0
         private var playbackPosition = 0L
 
         fun bind(item: VideoPlayer) {
-//            player = ExoPlayer.Builder(binding.playerView.context)
-//                // .setTrackSelector(trackSelector)
-//                .build()
-//                .also { exoPlayer ->
-//                    binding.playerView.player = item.player
-//                }
+
             initializePlayer(item.player)
         }
 
-        fun initializePlayer(player: ExoPlayer?) {
-            val trackSelector = DefaultTrackSelector().apply {
+        private fun initializePlayer(player: ExoPlayer?) {
+            val trackSelector = DefaultTrackSelector(binding.playerView.context).apply {
                 setParameters(buildUponParameters().setMaxVideoSizeSd())
             }
             this.player = ExoPlayer.Builder(binding.playerView.context)
@@ -72,7 +63,6 @@ class PlayerAdapter(context: Context) : RecyclerView.Adapter<PlayerAdapter.Playe
 
                     val mediaItem = MediaItem.Builder()
                         .setUri("https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")
-                        // .setMimeType(MimeTypes.APPLICATION_MPD)
                         .build()
                     exoPlayer.setMediaItem(mediaItem)
                     exoPlayer.playWhenReady = false // i will play it

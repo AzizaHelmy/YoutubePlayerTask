@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aziza.youtubeplayertask.databinding.ActivityMainBinding
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val playerAdapter by lazy {
-        PlayerAdapter(this)
+        PlayerAdapter()
     }
     private var playList = ArrayList<VideoPlayer>()
 
@@ -53,10 +54,9 @@ class MainActivity : AppCompatActivity() {
                     .setUri(uri)
                     .build()
                 exoPlayer.setMediaItem(mediaItem)
-
                 exoPlayer.playWhenReady = false // i will play it
                 exoPlayer.seekTo(currentItem, playbackPosition)
-                // exoPlayer.addListener(playbackStateListener)
+                exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
         playList.add(VideoPlayer(player!!))
@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun playbackStateListener() = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {
                 ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity() {
                 ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
                 else -> "UNKNOWN_STATE             -"
             }
-            Log.d("TAG", "changed state to $stateString")
+            Log.e("TAG", "changed state to $stateString")
         }
+    }
 }
