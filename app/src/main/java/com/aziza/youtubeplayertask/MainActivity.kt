@@ -12,40 +12,22 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
-import androidx.recyclerview.widget.GridLayoutManager
 import com.aziza.youtubeplayertask.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private var playList = ArrayList<String>()
-
-    // private lateinit var binding: ActivityMainBinding
-    private val playbackStateListener: Player.Listener = playbackStateListener()
     private var player: ExoPlayer? = null
+    private val playbackStateListener: Player.Listener = playbackStateListener()
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initialzeRecyclerView()
-        playList.add("https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")
-        playList.add("https://storage.googleapis.com/exoplayer-test-media-0/Jazz_In_Paris.mp3")
-        playList.add("https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")
-        playList.add("https://storage.googleapis.com/exoplayer-test-media-0/Jazz_In_Paris.mp3")
 
-    }
-
-    private fun initialzeRecyclerView() {
-        binding.videosRv.apply {
-            var layoutManager =
-                GridLayoutManager(this.context, 1, GridLayoutManager.HORIZONTAL, false)
-            setLayoutManager(layoutManager)
-        }
     }
 
     public override fun onStart() {
@@ -78,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer() {
+        
         val trackSelector = DefaultTrackSelector(this).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
