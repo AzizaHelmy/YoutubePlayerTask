@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer() {
-        
+
         val trackSelector = DefaultTrackSelector(this).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
