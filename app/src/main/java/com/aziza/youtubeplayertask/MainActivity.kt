@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.aziza.youtubeplayertask.databinding.ActivityMainBinding
+import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener
 import com.google.android.youtube.player.YouTubePlayerView
 
 
-class MainActivity : AppCompatActivity() {
-    //    private val youTubePlayerView= YouTubePlayer()
-//    private val binding by lazy(LazyThreadSafetyMode.NONE) {
-//        ActivityMainBinding.inflate(layoutInflater)
-//    }
+class MainActivity : YouTubeBaseActivity() {
+
     private lateinit var binding: ActivityMainBinding
 
     companion object {
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 p1: YouTubePlayer?,
                 p2: Boolean
             ) {
-                p1?.loadVideo("HzeK7g8cD0Y")
+                p1?.loadVideo("B95f2fd9bH0")
                 p1?.play()
             }
 
